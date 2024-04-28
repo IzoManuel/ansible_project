@@ -1,4 +1,4 @@
-# My Ansible Project
+# DG Ansible Project
 
 ## Description
 

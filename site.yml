@@ -1,0 +1,7 @@
+- name: Configure servers
+  hosts: all
+  become: true
+  vars:
+    message: "Hello, ansible!"
+  roles:
+    - common
