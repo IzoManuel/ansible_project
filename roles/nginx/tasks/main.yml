@@ -1,14 +1,28 @@
+---
 - name: Install Nginx
-  apt:
+  yum:
     name: nginx
     state: present
     update_cache: yes
 - name: Copy Nginx configuration
   template:
     src: default.j2
-    dest: /etc/nginx/sites-enabled/default
+    dest: /etc/nginx/conf.d/default
   notify:
     - Restart Nginx
+- name: Clone Github repository to temporary directory
+  git:
+    repo: "{{ github_repo_url }}"
+    dest: "{{ temp_dir }}"
+    key_file: "{{ ssh_key }}"
+    force: yes
+    version: main
+    accept_hostkey: yes
+    clone: yes
+- name: Move repository to target directory
+  command: mv "{{ temp_directory }}" "{{ html_dir }}"
+  args:
+    creates: "{{ html_dir }}"
 - name: Ensure nginx is running
   systemd:
     name: nginx

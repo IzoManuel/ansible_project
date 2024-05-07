@@ -1,6 +1,11 @@
+---
 - name: Deploy nginx to servers
   hosts: nginx
   become: true
-  vars: {}
+  vars: 
+    github_repo_url: git@github.com:deployguru-learning/dg-web-portfolio.git
+    html_dir: /var/www/html
+    ssh_key: ~/.ssh/id_rsa
+    temp_dir: /tmp/web_portfolio
   roles:
     - nginx
